@@ -3,7 +3,7 @@
  * Plugin Name: University of Michigan: News
  * Plugin URI: https://github.com/umdigital/umich-news/
  * Description: Display umich news related content
- * Version: 1.0
+ * Version: 1.0.1
  * Author: U-M: Digital
  * Author URI: http://vpcomm.umich.edu
  */
@@ -127,7 +127,7 @@ class UmichNews {
         // generate api request url
         $url = self::$_baseRemoteUrls[ $params['type'] ];
         $parts = parse_url( $url );
-        $parts['query'] = isset( $parts['query'] ) ? $parts['query'] : array();
+        $parts['query'] = isset( $parts['query'] ) ? $parts['query'] : '';
         parse_str( $parts['query'], $parts['query'] );
         $parts['query']['limit'] = $params['limit'];
         $parts['query'] = http_build_query( $parts['query'] );
