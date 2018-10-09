@@ -3,7 +3,7 @@
  * Plugin Name: University of Michigan: News
  * Plugin URI: https://github.com/umdigital/umich-news/
  * Description: Display umich news related content
- * Version: 1.0.1
+ * Version: 1.1
  * Author: U-M: Digital
  * Author URI: http://vpcomm.umich.edu
  */
@@ -62,7 +62,8 @@ class UmichNews {
             $atts = shortcode_atts(array(
                 'type'     => '',
                 'limit'    => '3',
-                'template' => 'shortcode'
+                'template' => 'shortcode',
+                'pagevar'  => '',
             ), $atts );
 
             switch( $atts['type'] ) {
@@ -74,6 +75,11 @@ class UmichNews {
                     break;
             }
 
+            $startNum = null;
+            if( $atts['pagevar'] && isset( $_GET[ $atts['pagevar'] ] ) ) {
+                $startNum = (($_GET[ $atts['pagevar'] ] - 1) * $atts['limit']) + 1;
+            }
+
             // locate template
             $tpl = implode( DIRECTORY_SEPARATOR, array( UMICHNEWS_PATH, 'templates', $atts['type'] .'--shortcode.tpl' ) );
             $tpl = locate_template( array( 'umich-news/'. $atts['type'] .'--'. $atts['template'] .'.tpl' ), false ) ?: $tpl;
@@ -81,7 +87,8 @@ class UmichNews {
             // GET DATA
             $newsRes = self::getApi(array(
                 'type'  => $atts['type'],
-                'limit' => $atts['limit']
+                'limit' => $atts['limit'],
+                'start' => $startNum
             ));
 
             if( $newsRes ) {
@@ -117,7 +124,9 @@ class UmichNews {
     {
         $params = array_merge(array(
             'type'  => '',
-            'limit' => 3
+            'limit' => 3,
+            'start' => null,
+            'date'  => null
         ), $params );
 
         if( !$params['type'] || !isset( self::$_baseRemoteUrls[ $params['type'] ] ) ) {
@@ -129,7 +138,14 @@ class UmichNews {
         $parts = parse_url( $url );
         $parts['query'] = isset( $parts['query'] ) ? $parts['query'] : '';
         parse_str( $parts['query'], $parts['query'] );
-        $parts['query']['limit'] = $params['limit'];
+
+        unset( $params['type'] );
+        foreach( $params as $key => $val ) {
+            if( !is_null( $val ) ) {
+                $parts['query'][ $key ] = $val;
+            }
+        }
+
         $parts['query'] = http_build_query( $parts['query'] );
         $parts['query'] = $parts['query'] ? '?'. $parts['query'] : '';
         $url = "{$parts['scheme']}://{$parts['host']}{$parts['path']}{$parts['query']}";
