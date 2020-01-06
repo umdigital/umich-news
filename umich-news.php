@@ -3,7 +3,7 @@
  * Plugin Name: University of Michigan: News
  * Plugin URI: https://github.com/umdigital/umich-news/
  * Description: Display umich news related content
- * Version: 1.1
+ * Version: 1.1.1
  * Author: U-M: Digital
  * Author URI: http://vpcomm.umich.edu
  */
@@ -12,7 +12,7 @@ define( 'UMICHNEWS_PATH', dirname( __FILE__ ) . DIRECTORY_SEPARATOR );
 
 class UmichNews {
     static private $_baseRemoteUrls = array(
-        'in-the-news' => 'https://tools.umichcreative.org/apis/in-the-news/'
+        'in-the-news' => 'https://tools.vpcomm.umich.edu/apis/in-the-news/'
     );
     static private $_cacheTimeout = 1;
 
