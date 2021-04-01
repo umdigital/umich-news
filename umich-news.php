@@ -3,7 +3,7 @@
  * Plugin Name: University of Michigan: News
  * Plugin URI: https://github.com/umdigital/umich-news/
  * Description: Display umich news related content
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: U-M: Digital
  * Author URI: http://vpcomm.umich.edu
  */
@@ -112,7 +112,7 @@ class UmichNews {
                 '*'
             ));
 
-            foreach( glob( $cachPath ) as $file ) {
+            foreach( glob( $cachePath ) as $file ) {
                 if( (filemtime( $file ) + $expires) < time() ) {
                     unlink( $file );
                 }
