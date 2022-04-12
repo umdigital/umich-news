@@ -1,0 +1,17 @@
+.wp-block-umichnews-news a {
+    pointer-events: none;
+}
+
+.wp-block-umichnews-news .page-numbers {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+.wp-block-umichnews-news .page-numbers li {
+    display: inline-block;
+    margin: 0;
+}
+.wp-block-umichnews-news .page-numbers li a {
+    padding: 0 5px;
+}

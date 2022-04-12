@@ -3,14 +3,15 @@
  * Plugin Name: University of Michigan: News
  * Plugin URI: https://github.com/umdigital/umich-news/
  * Description: Display umich news related content
- * Version: 1.1.3
+ * Version: 1.2
  * Author: U-M: Digital
- * Author URI: http://vpcomm.umich.edu
+ * Author URI: https://vpcomm.umich.edu
  */
 
-define( 'UMICHNEWS_PATH', dirname( __FILE__ ) . DIRECTORY_SEPARATOR );
+class UmichNews
+{
+    static public $pluginPath;
 
-class UmichNews {
     static private $_baseRemoteUrls = array(
         'in-the-news' => 'https://tools.vpcomm.umich.edu/apis/in-the-news/'
     );
@@ -18,11 +19,12 @@ class UmichNews {
 
     static public function init()
     {
+        self::$pluginPath    = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
         self::$_cacheTimeout = 60 * 60 * (self::$_cacheTimeout >= 1 ? self::$_cacheTimeout : 1);
 
         // UPDATER SETUP
         if( !class_exists( 'WP_GitHub_Updater' ) ) {
-            include_once UMICHNEWS_PATH .'includes'. DIRECTORY_SEPARATOR .'updater.php';
+            include_once self::$pluginPath .'includes'. DIRECTORY_SEPARATOR .'updater.php';
         }
         if( isset( $_GET['force-check'] ) && $_GET['force-check'] && !defined( 'WP_GITHUB_FORCE_UPDATE' ) ) {
             define( 'WP_GITHUB_FORCE_UPDATE', true );
@@ -54,6 +56,17 @@ class UmichNews {
             ));
         }
 
+        // ADD EDITOR BLOCKS
+        add_action( 'init', function(){
+            if( function_exists( 'register_block_type' ) ) {
+                foreach( glob( __DIR__ .'/blocks/*',  GLOB_ONLYDIR ) as $block ) {
+                    if( is_file( "{$block}/block.php" ) ) {
+                        include_once "{$block}/block.php";
+                    }
+                }
+            }
+        });
+
         add_action( 'wp_enqueue_scripts', function(){
             wp_enqueue_style( 'umich-news', plugins_url('assets/umich-news.css', __FILE__ ) );
         });
@@ -81,7 +94,7 @@ class UmichNews {
             }
 
             // locate template
-            $tpl = implode( DIRECTORY_SEPARATOR, array( UMICHNEWS_PATH, 'templates', $atts['type'] .'--shortcode.tpl' ) );
+            $tpl = implode( DIRECTORY_SEPARATOR, array( self::$pluginPath, 'templates', $atts['type'] .'--shortcode.tpl' ) );
             $tpl = locate_template( array( 'umich-news/'. $atts['type'] .'--'. $atts['template'] .'.tpl' ), false ) ?: $tpl;
 
             // GET DATA

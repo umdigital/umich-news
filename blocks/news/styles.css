@@ -1,0 +1,35 @@
+.wp-block-umichnews-news.in-the-news.is-style-basic .news-items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic .news-items li {
+    padding: 5px 0;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic .news-items li + li {
+    border-top: 1px dotted;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic a {
+    display: block;
+    text-decoration: none;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic .date {
+    display: block;
+    color: initial;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic .outlet {
+    display: block;
+    color: initial;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic .title {
+    display: block;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic .more {
+    text-align: right;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic a:hover {
+    text-decoration: none;
+}
+.wp-block-umichnews-news.in-the-news.is-style-basic a:hover .title {
+    text-decoration: underline;
+}

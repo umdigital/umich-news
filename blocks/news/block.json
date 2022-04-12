@@ -1,0 +1,46 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "umichnews/news",
+    "title": "U-M News",
+    "category": "embed",
+    "icon": "list-view",
+    "description": "Show U-M News",
+    "keywords": [],
+    "version": "1.0.0",
+    "textdomain": "umichnews",
+    "attributes": {
+        "type": {
+            "type"   : "string",
+            "default": "in-the-news"
+        },
+        "limit": {
+            "type"   : "number",
+            "default": 3
+        },
+        "showDate": {
+            "type"   : "boolean",
+            "default": true
+        },
+        "paginate": {
+            "type"   : "boolean",
+            "default": false
+        },
+        "pagevar": {
+            "type"   : "string",
+            "default": "umnpage"
+        },
+        "template": {
+            "type"   : "string"
+        }
+    },
+
+    "styles": [{
+        "name" : "basic",
+        "label": "Basic",
+        "isDefault": true
+    },{
+        "name" : "plain",
+        "label": "Plain"
+    }]
+}
